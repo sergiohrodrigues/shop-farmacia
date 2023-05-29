@@ -1,0 +1,112 @@
+{
+    "itens": [
+        {
+            "id": 1,
+            "titulo": "Amoxilina",
+            "descricao": "Remédio muito bom para tal coisa, não estraga o fígado igual aos outros remédios, etc..",
+            "valor": 10
+        },
+        {
+            "id": 2,
+            "titulo": "Dipirona",
+            "descricao": "Remédio muito bom para dor de cabeça, tomou passou, agora se a dor de cabeça for mais forte temos outros remédios também, mas no geral esse funciona muito bem.",
+            "valor": 10
+        },
+        {
+            "id": 3,
+            "titulo": "Nimisulida",
+            "descricao": "Remédio muito bom para dores de garganta, tomando uma cartela dessa de 8 em 8 horas sua garganta fica nova denovo.",
+            "valor": 13
+        },
+        {
+            "id": 4,
+            "titulo": "Frauda Personal baby",
+            "descricao": "Produto de ótima qualidade, custo beneficio, e qualquer duvida estamos a disposição para ajudar..",
+            "valor": 50
+        },
+        {
+            "id": 5,
+            "titulo": "Frauda Pampers",
+            "descricao": "Produto de ótima qualidade, custo beneficio, e qualquer duvida estamos a disposição para ajudar..",
+            "valor": 60
+        },
+        {
+            "id": 6,
+            "titulo": "Mamadeira Kuka",
+            "descricao": "Produto de ótima qualidade, custo beneficio, e qualquer duvida estamos a disposição para ajudar..",
+            "valor": 30
+        },
+        {
+            "id": 7,
+            "titulo": "Mamadeira Lolly",
+            "descricao": "Produto de ótima qualidade, custo beneficio, e qualquer duvida estamos a disposição para ajudar..",
+            "valor": 35
+        },
+        {
+            "id": 8,
+            "titulo": "Perfume Guerlan",
+            "descricao": "Produto de ótima qualidade, custo beneficio, e qualquer duvida estamos a disposição para ajudar..",
+            "valor": 100
+        },
+        {
+            "id": 9,
+            "titulo": "Perfume Olympea",
+            "descricao": "Produto de ótima qualidade, custo beneficio, e qualquer duvida estamos a disposição para ajudar..",
+            "valor": 120
+        },
+        {
+            "id": 10,
+            "titulo": "Perfume Shalimar",
+            "descricao": "Produto de ótima qualidade, custo beneficio, e qualquer duvida estamos a disposição para ajudar..",
+            "valor": 150
+        },
+        {
+            "id": 11,
+            "titulo": "Conjunto de maquinagem i9Make",
+            "descricao": "Produto de ótima qualidade, custo beneficio, e qualquer duvida estamos a disposição para ajudar..",
+            "valor": 200
+        },
+        {
+            "id": 12,
+            "titulo": "Pó WC",
+            "descricao": "Produto de ótima qualidade, custo beneficio, e qualquer duvida estamos a disposição para ajudar..",
+            "valor": 50
+        },
+        {
+            "id": 13,
+            "titulo": "Pincel Inglot",
+            "descricao": "Produto de ótima qualidade, custo beneficio, e qualquer duvida estamos a disposição para ajudar..",
+            "valor": 70
+        },
+        {
+            "id": 14,
+            "titulo": "Shampoo Pantene",
+            "descricao": "Produto de ótima qualidade, custo beneficio, e qualquer duvida estamos a disposição para ajudar..",
+            "valor": 25
+        },
+        {
+            "id": 15,
+            "titulo": "Shampoo e Condicionador Palmolive",
+            "descricao": "Produto de ótima qualidade, custo beneficio, e qualquer duvida estamos a disposição para ajudar..",
+            "valor": 20
+        },
+        {
+            "id": 16,
+            "titulo": "Antitranspirante Rexona",
+            "descricao": "Produto de ótima qualidade, custo beneficio, e qualquer duvida estamos a disposição para ajudar..",
+            "valor": 15
+        },
+        {
+            "id": 17,
+            "titulo": "Desodorante Nivea Man",
+            "descricao": "Produto de ótima qualidade, custo beneficio, e qualquer duvida estamos a disposição para ajudar..",
+            "valor": 14
+        },
+        {
+            "id": 18,
+            "titulo": "Desodorante Rexona",
+            "descricao": "Produto de ótima qualidade, custo beneficio, e qualquer duvida estamos a disposição para ajudar..",
+            "valor": 13
+        }
+    ]
+}
