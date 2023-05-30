@@ -146,7 +146,7 @@ export default function Card({item}: Props) {
                 <button>Adicionbar ao carrinho <BsCart2 className="carrinho"/></button> 
             </Div2>
         </Item>
-        <Modal modalOpen={modalOpen} setModalOpen={setModalOpen} item={item}/>
+        {modalOpen && <Modal modalOpen={modalOpen} setModalOpen={setModalOpen} item={item}/>}
         </>
     )
 }

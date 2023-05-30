@@ -4,25 +4,35 @@ import Image from "next/image"
 import { Item } from "@/interface/item"
 import { useState } from 'react'
 import { BsCart2 } from 'react-icons/bs'
+import { useEffect } from 'react'
 
 interface PropsStyledComponents {
     display: string
 }
 
-const ModalContainer = styled.section<PropsStyledComponents>`
-    width: 90%;
-    margin: 0 auto;
-    padding: 1rem 1rem;
+const ModalBackDrop = styled.section<PropsStyledComponents>`
+    width: 100vw;
+    height: 100vh;
+    background-color: transparent;
     display: ${props => props.display};
-    flex-direction: column;
-    gap: 1rem;
     position: fixed;
+    z-index: 999;
+    top: 0;
+    overflow-y: visible;
+`
+
+/* display: ${props => props.display}; */
+const ModalContainer = styled.div`
+    width: 90%;
+    margin: -2rem auto 0 auto;
+    padding: 1rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
     background-color: gray;
-    top: 5%;
-    left: 4%;
     z-index: 999;
     pointer-events: visible;
-    overflow-y: visible;
+    position: relative;
     svg{
         position: absolute;
         top: 1%;
@@ -32,11 +42,11 @@ const ModalContainer = styled.section<PropsStyledComponents>`
 @media screen and  (min-width: 768px){
     width: 70%;
     min-width: 853px;
-    height: 70vh;
+    height: auto;
     padding: 3rem 2rem;
-    display: ${props => props.display};
     flex-direction: row;
-    gap: 4rem;
+    justify-content: center;
+    gap: 2rem;
     position: fixed;
     background-color: gray;
     top: 15%;
@@ -110,8 +120,11 @@ const TerceiraDiv= styled.div`
         font-size: 1.5rem;
     }
     span{
-        font-size: 1.7rem;
+        font-size: 1.2rem;
         font-weight: 700;
+    }
+    h2{
+        font-size: 1.2rem;
     }
     @media screen and (min-width: 768px){
         align-items: flex-start;
@@ -121,7 +134,8 @@ const TerceiraDiv= styled.div`
             font-size: 2rem;
         }
         button{
-            width: 80%;
+            margin-top: 3rem;
+            min-width: 250px;
             justify-content: flex-end;
             &:hover{
                 cursor: pointer;
@@ -142,29 +156,41 @@ export default function Modal ({modalOpen, setModalOpen, item}: Props) {
     function fecharModal(){
         setModalOpen(false)
         setImagemPadrao(`/imagens/imagem${item.id}.png`)
+        disabledScrollBody(false)
     }
 
+    useEffect(() => {
+        disabledScrollBody(true)
+    }, [])
+
+    function disabledScrollBody(isDisable : boolean){
+        if(typeof window !== undefined){
+            document.body.style.overflow = isDisable ? 'hidden' : 'auto'
+        }
+    }
+
+
     return(
-        <ModalContainer display={modalOpen ? 'flex' : 'none'}>
+        <ModalBackDrop display={modalOpen ? 'flex' : 'none'}>
+            <ModalContainer>
+                <AiOutlineCloseCircle onClick={fecharModal} />
 
-            <AiOutlineCloseCircle onClick={fecharModal} />
+                <PrimeiraDiv>
+                    <Image onClick={() => setImagemPadrao(`/imagens/imagem${item.id}.png`)} src={`/imagens/imagem${item.id}.png`} width={50} height={50} alt="Imagem1"/>
+                    <Image onClick={() => setImagemPadrao(`/imagens/imagem${item.id}-${item.id}.png`)} src={`/imagens/imagem${item.id}-${item.id}.png`} width={50} height={50} alt="Imagem2"/>
+                </PrimeiraDiv>
 
-            <PrimeiraDiv>
-                <Image onClick={() => setImagemPadrao(`/imagens/imagem${item.id}.png`)} src={`/imagens/imagem${item.id}.png`} width={50} height={50} alt="Imagem1"/>
-                <Image onClick={() => setImagemPadrao(`/imagens/imagem${item.id}-${item.id}.png`)} src={`/imagens/imagem${item.id}-${item.id}.png`} width={50} height={50} alt="Imagem2"/>
-            </PrimeiraDiv>
+                <SegundaDiv>
+                    <Image src={imagemPadrao} width={400} height={400} alt="Imagem1"/>
+                </SegundaDiv>
 
-            <SegundaDiv>
-                <Image src={imagemPadrao} width={400} height={400} alt="Imagem1"/>
-            </SegundaDiv>
-
-            <TerceiraDiv>
-                <h2>{item.titulo}</h2>
-                <p>{item.descricao}</p>
-                <span>Valor: R${item.valor},00</span>
-                <button>Adicionar ao Carrinho <BsCart2 className="carrinho"/></button>
-            </TerceiraDiv>
-
-        </ModalContainer>
+                <TerceiraDiv>
+                    <h2>{item.titulo}</h2>
+                    <p>{item.descricao}</p>
+                    <span>Valor: R${item.valor},00</span>
+                    <button>Adicionar ao Carrinho <BsCart2 className="carrinho"/></button>
+                </TerceiraDiv>
+            </ModalContainer>
+        </ModalBackDrop>
     )
 }
