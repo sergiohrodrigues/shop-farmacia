@@ -12,13 +12,17 @@ interface PropsStyledComponents {
 
 const ModalBackDrop = styled.section<PropsStyledComponents>`
     width: 100vw;
-    height: 100vh;
+    height: 90vh;
     background-color: transparent;
     display: ${props => props.display};
     position: fixed;
     z-index: 999;
-    top: 0;
+    top: 7%;
     overflow-y: visible;
+@media screen and (min-width: 768px){
+    height: 100vh;
+    top: 0;
+}
 `
 
 /* display: ${props => props.display}; */

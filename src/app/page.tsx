@@ -10,10 +10,6 @@ const MainContainer = styled.main`
     position: relative;
     overflow-y: hidden;
 `
-
-interface Props {
-    pointer: string
-}
     
 const ProdutosContainer = styled.section`
     width: 90%;
