@@ -10,11 +10,32 @@ interface PropsStyledComponents {
 }
 
 const ModalContainer = styled.section<PropsStyledComponents>`
+    width: 90%;
+    margin: 0 auto;
+    padding: 1rem 1rem;
+    display: ${props => props.display};
+    flex-direction: column;
+    gap: 1rem;
+    position: fixed;
+    background-color: gray;
+    top: 5%;
+    left: 4%;
+    z-index: 999;
+    pointer-events: visible;
+    overflow-y: visible;
+    svg{
+        position: absolute;
+        top: 1%;
+        right: 1%;
+        font-size: 2rem;
+    }
+@media screen and  (min-width: 768px){
     width: 70%;
     min-width: 853px;
     height: 70vh;
     padding: 3rem 2rem;
     display: ${props => props.display};
+    flex-direction: row;
     gap: 4rem;
     position: fixed;
     background-color: gray;
@@ -31,33 +52,51 @@ const ModalContainer = styled.section<PropsStyledComponents>`
             cursor: pointer;
         }
     }
+}
 `
 
 const PrimeiraDiv= styled.div`
     display: flex;
-    flex-direction: column;
     gap: 1rem;
-    img:hover{
-        cursor: pointer;
-        border: 1px solid #000;
+    @media screen and (min-width: 768px){
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        img:hover{
+            cursor: pointer;
+            border: 1px solid #000;
+        }
     }
 `
 
 const SegundaDiv= styled.div`
-    width: 400px;
+width: 100%;
+height: 200px;
+text-align: center;
+img{
+    width: 80%;
+    max-width: 250px;
+    height: 200px;
+}
+@media screen and (min-width: 768px){
     height: 400px;
+    img{
+        min-width: 400px;
+        width: 100%;
+        height: 400px;
+    }
+}
 `
 
 const TerceiraDiv= styled.div`
     display: flex;
     flex-direction: column;
-    gap: 2rem;
-    h2{
-        font-size: 2rem;
-    }
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
     button{
-        margin-top: 7rem;
-        width: 80%;
+        width: 100%;
+        max-width: 250px;
         justify-content: flex-end;
         padding: 1rem;
         text-transform: uppercase;
@@ -65,9 +104,6 @@ const TerceiraDiv= styled.div`
         display: flex;
         align-items: center;
         gap: 1rem;
-        &:hover{
-            cursor: pointer;
-        }
     }
     svg{
         position: static;
@@ -76,6 +112,21 @@ const TerceiraDiv= styled.div`
     span{
         font-size: 1.7rem;
         font-weight: 700;
+    }
+    @media screen and (min-width: 768px){
+        align-items: flex-start;
+        text-align: left;
+        gap: 2rem;
+        h2{
+            font-size: 2rem;
+        }
+        button{
+            width: 80%;
+            justify-content: flex-end;
+            &:hover{
+                cursor: pointer;
+            }
+        }
     }
 `
 

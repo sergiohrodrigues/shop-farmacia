@@ -2,17 +2,28 @@ import Link from "next/link";
 import styled from 'styled-components'
 
 const HeaderContainer = styled.header`
-  display: flex;
-  justify-content: space-evenly;
-  padding: 1rem 0;
-  background-color: #278a5b;
-  ul{
     display: flex;
-    gap: 2rem;
-    a:hover{
-      color: #fff;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 0;
+    gap: 1rem;
+    background-color: #278a5b;
+    ul{
+      display: flex;
+      gap: 1rem;
     }
-  }
+@media screen and (min-width: 768px){
+    flex-direction: row;
+    justify-content: space-evenly;
+    background-color: #278a5b;
+    gap: 0;
+    ul{
+      gap: 2rem;
+      a:hover{
+        color: #fff;
+      }
+    }
+}
 `
 
 export default function Menu() {

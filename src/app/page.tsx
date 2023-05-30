@@ -8,7 +8,7 @@ import { useState } from 'react'
 
 const MainContainer = styled.main`
     position: relative;
-overflow-y: none;
+    overflow-y: hidden;
 `
 
 interface Props {

@@ -7,7 +7,8 @@ import { BsCart2 } from 'react-icons/bs'
 import Modal from "../Modal"
 
 const Item = styled.div`
-    width: 20%;
+    width: 100%;
+    max-width: 310px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -30,23 +31,53 @@ const Item = styled.div`
     .modalopen{
         opacity: 0.5;
     }
+@media screen and (min-width: 900px){
+    min-width: 198px;
+    max-width: auto;
+    width: 20%;
+}
 `
 
 const Div1 = styled.div`
-position: relative;
-    button{
-        position: absolute;
-        bottom: 2%;
-        left: 20%;
-        padding: 0.3rem;
-        &:hover{
-            cursor: pointer;
+    position: relative;
+    .btn-desktop{
+        display: none;
+    }
+        button{
+            position: absolute;
+            bottom: 2%;
+            left: 20%;
+            padding: 0.3rem;
+            &:hover{
+                cursor: pointer;
+            }
         }
+        img{
+            width: 150px;
+            height: 200px;
+        }
+@media screen and (min-width: 768px){
+    position: relative;
+    .btn-desktop{
+        display: block;
     }
-    img{
-        width: 150px;
-        height: 200px;
+    .btn-mobile{
+        display: none;
     }
+        button{
+            position: absolute;
+            bottom: 2%;
+            left: 20%;
+            padding: 0.3rem;
+            &:hover{
+                cursor: pointer;
+            }
+        }
+        img{
+            width: 150px;
+            height: 200px;
+        }
+}
 `
 
 const Div2 = styled.div`
@@ -106,7 +137,8 @@ export default function Card({item}: Props) {
             {!iconFavorite ? <MdFavoriteBorder onClick={favoritarItem}/> : <MdFavorite onClick={desfavoritarItem}/>}
             <Div1>
                 {!imagemDois ? <Image src={`/imagens/imagem${item.id}.png`} width={100} height={150} alt={item.titulo}/> : <Image src={`/imagens/imagem${item.id}-${item.id}.png`} width={100} height={150} alt={item.titulo}/>}
-                {imagemDois ? <button onClick={mostrarModal}>Mais detalhes</button> : ''}
+                {imagemDois ? <button onClick={mostrarModal} className="btn-desktop">Mais detalhes</button> : ''}
+                <button onClick={mostrarModal} className="btn-mobile">Mais detalhes</button>
             </Div1>
             <Div2>
                 <h2>{item.titulo}</h2>
