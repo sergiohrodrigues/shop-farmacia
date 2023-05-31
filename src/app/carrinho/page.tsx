@@ -1,11 +1,11 @@
 'use client'
 import Menu from "@/components/Menu";
 
-export default function Contato() {
+export default function Carrinho() {
     return (
         <>
             <Menu />
-            <div>Pagina de Contato...</div>
+            <div>Pagina de Carrinho...</div>
         </>
     )
 }

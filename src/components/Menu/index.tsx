@@ -36,10 +36,11 @@ export default function Menu() {
                 <Link href="/">
                     Inicio
                 </Link>
-                <Link href="/">
+                <Link href="/favorite
+                ">
                     Lista de Desejos
                 </Link>
-                <Link href="/">
+                <Link href="/carrinho">
                     Carrinho
                 </Link>
             </ul>

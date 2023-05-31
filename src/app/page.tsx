@@ -3,7 +3,8 @@ import Menu from "@/components/Menu";
 import itens from '../json/item.json'
 import styled from "styled-components";
 import Card from "@/components/Card";
-import Modal from "@/components/Modal";
+import { RecoilRoot, useSetRecoilState } from "recoil";
+import { Item } from "@/interface/item";
 import { useState } from 'react'
 
 const MainContainer = styled.main`
@@ -23,15 +24,31 @@ const ProdutosContainer = styled.section`
 
 export default function Home() {
 
+    const [listaFavorita, setListaFavorita] = useState<Item[]>([])
+
+    function handleFavorite(item: Item){
+        setListaFavorita([...listaFavorita, item])
+    }
+
+    function handleOfFavorite(item: Item){
+        const listaAtualizada = listaFavorita.filter(itemDaLista => itemDaLista.id !== item.id)
+        setListaFavorita(listaAtualizada)
+    }
+
+    // const setlistaFavoritos = useSetRecoilState(listaDeDesejos)
+
+    console.log(listaFavorita)
     return (
-        <MainContainer>
-            <Menu />
-            {/* <ProdutosContainer pointer={modalOpen ? 'none' : 'visible'}> */}
-            <ProdutosContainer>
-                {itens.itens.map((item, index) => (
-                    <Card key={index} item={item}/>
-                ))}
-            </ProdutosContainer>
-        </MainContainer>
+        <RecoilRoot>
+            <MainContainer>
+                <Menu />
+                {/* <ProdutosContainer pointer={modalOpen ? 'none' : 'visible'}> */}
+                <ProdutosContainer>
+                    {itens.itens.map((item, index) => (
+                        <Card key={index} item={item} onFavorite={handleFavorite} offFavorite={handleOfFavorite}/>
+                        ))}
+                </ProdutosContainer>
+            </MainContainer>
+        </RecoilRoot>
     )
 }

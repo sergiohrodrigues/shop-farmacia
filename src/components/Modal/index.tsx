@@ -32,6 +32,7 @@ const ModalContainer = styled.div`
     padding: 1rem 1rem;
     display: flex;
     flex-direction: column;
+    justify-content: space-evenly;
     gap: 0.5rem;
     background-color: gray;
     z-index: 999;

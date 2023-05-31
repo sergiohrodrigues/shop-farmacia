@@ -5,6 +5,8 @@ import styled from "styled-components"
 import { MdFavoriteBorder, MdFavorite} from 'react-icons/md'
 import { BsCart2 } from 'react-icons/bs'
 import Modal from "../Modal"
+import { useRecoilValue, useSetRecoilState} from 'recoil'
+import { favoritos } from "@/states/favoritos"
 
 const Item = styled.div`
     width: 100%;
@@ -106,25 +108,31 @@ const Div2 = styled.div`
 `
 
 interface Props {
-    item: Item
+    item: Item,
+    onFavorite: (item: Item) => void,
+    offFavorite: (item: Item) => void
 }
 
 
-export default function Card({item}: Props) {
+export default function Card({item, onFavorite, offFavorite}: Props) {
     
     // const [mostrarMensagemDeTitulo, setMostrarMensagemDeTitulo] = useState('')
     const [iconFavorite, setIconFavorite] = useState(false)
-    const [listaFavorita, setListaFavorita] = useState<Item[]>([])
     const [imagemDois, setImagemDois] = useState(false)
     const [modalOpen, setModalOpen] = useState(false)
 
+    const listaFavoritos = useRecoilValue(favoritos)
+
     function favoritarItem(){
         setIconFavorite(true)
-        setListaFavorita([...listaFavorita, {...item}])
+        onFavorite(item)
+        // console.log(typeof(itemCLicado))
+        // setListaFavorita([...listaFavorita, {...item}])
     }
 
     function desfavoritarItem(){
         setIconFavorite(false)
+        offFavorite(item)
     }
 
     function mostrarModal(){
