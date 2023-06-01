@@ -40,6 +40,7 @@ function handleOfFavorite(item: Item){
     } else {
         setListaFavoritos([])
     }
+    
   }, [setListaFavoritos])
 
   return (
