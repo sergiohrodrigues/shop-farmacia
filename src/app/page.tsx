@@ -3,9 +3,10 @@ import Menu from "@/components/Menu";
 import itens from '../json/item.json'
 import styled from "styled-components";
 import Card from "@/components/Card";
-import { RecoilRoot, useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { Item } from "@/interface/item";
-import { useState } from 'react'
+import { favoritos } from "@/states/favoritos";
+import { useState, useEffect } from 'react'
 
 const MainContainer = styled.main`
     position: relative;
@@ -19,36 +20,48 @@ const ProdutosContainer = styled.section`
     flex-wrap: wrap;
     justify-content: center;
     gap: 2rem;
-    `
-    /* pointer-events: ${props => props.pointer}; */
+`
 
 export default function Home() {
 
-    const [listaFavorita, setListaFavorita] = useState<Item[]>([])
+    const listaFavoritos = useRecoilValue(favoritos)
+    const setListaFavoritos = useSetRecoilState<Item[]>(favoritos)
 
     function handleFavorite(item: Item){
-        setListaFavorita([...listaFavorita, item])
+        const novaLista = [...listaFavoritos, item]
+        setListaFavoritos(novaLista)
+        localStorage.setItem('listaFavoritos', JSON.stringify(novaLista));
     }
-
+    
+    
+    useEffect(() => {
+        const listaLocalStorage = localStorage.getItem('listaFavoritos')
+        const listaLocalStorageConvertida = JSON.parse(listaLocalStorage || '[]')
+        if(listaLocalStorageConvertida.length){
+            setListaFavoritos(listaLocalStorageConvertida)
+        } else {
+            setListaFavoritos([])
+        }
+    }, [setListaFavoritos])
+    
     function handleOfFavorite(item: Item){
-        const listaAtualizada = listaFavorita.filter(itemDaLista => itemDaLista.id !== item.id)
-        setListaFavorita(listaAtualizada)
+        const listaAtualizada = listaFavoritos.filter(itemDaLista => itemDaLista.id !== item.id)
+        setListaFavoritos(listaAtualizada)
+        localStorage.setItem('listaFavoritos', JSON.stringify(listaAtualizada));
     }
 
-    // const setlistaFavoritos = useSetRecoilState(listaDeDesejos)
+    // const iconIsFavorite = '<MdFavoriteBorder onClick={favoritarItem}/>'
+    // const iconNoFavorite = '<MdFavorite onClick={desfavoritarItem}/>'
 
-    console.log(listaFavorita)
+    // console.log(listaFavoritos)
     return (
-        <RecoilRoot>
-            <MainContainer>
-                <Menu />
-                {/* <ProdutosContainer pointer={modalOpen ? 'none' : 'visible'}> */}
-                <ProdutosContainer>
-                    {itens.itens.map((item, index) => (
-                        <Card key={index} item={item} onFavorite={handleFavorite} offFavorite={handleOfFavorite}/>
-                        ))}
-                </ProdutosContainer>
-            </MainContainer>
-        </RecoilRoot>
+        <MainContainer>
+            <Menu />
+            <ProdutosContainer>
+                {itens.itens.map((item, index) => (
+                    <Card key={index} item={item} onFavorite={handleFavorite} offFavorite={handleOfFavorite}/>
+                    ))}
+            </ProdutosContainer>
+        </MainContainer>
     )
 }

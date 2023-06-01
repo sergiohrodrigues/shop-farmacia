@@ -1,12 +1,12 @@
 import { Item } from "@/interface/item"
 import Image from "next/image"
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import styled from "styled-components"
-import { MdFavoriteBorder, MdFavorite} from 'react-icons/md'
 import { BsCart2 } from 'react-icons/bs'
 import Modal from "../Modal"
-import { useRecoilValue, useSetRecoilState} from 'recoil'
+import { useRecoilValue } from "recoil"
 import { favoritos } from "@/states/favoritos"
+import { MdFavoriteBorder, MdFavorite } from 'react-icons/md'
 
 const Item = styled.div`
     width: 100%;
@@ -115,19 +115,24 @@ interface Props {
 
 
 export default function Card({item, onFavorite, offFavorite}: Props) {
-    
-    // const [mostrarMensagemDeTitulo, setMostrarMensagemDeTitulo] = useState('')
-    const [iconFavorite, setIconFavorite] = useState(false)
     const [imagemDois, setImagemDois] = useState(false)
     const [modalOpen, setModalOpen] = useState(false)
+    const [iconFavorite, setIconFavorite] = useState(false)
 
     const listaFavoritos = useRecoilValue(favoritos)
 
+    useEffect(() => {
+        const itensNaListaDeFavoritos = listaFavoritos.find(itemDaLista => itemDaLista.id === item.id)
+        if(itensNaListaDeFavoritos){
+            setIconFavorite(true)
+        } else {
+            setIconFavorite(false)
+        }
+    }, [listaFavoritos, item])
+
     function favoritarItem(){
-        setIconFavorite(true)
         onFavorite(item)
-        // console.log(typeof(itemCLicado))
-        // setListaFavorita([...listaFavorita, {...item}])
+        setIconFavorite(true)
     }
 
     function desfavoritarItem(){
