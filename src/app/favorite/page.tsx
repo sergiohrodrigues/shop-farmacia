@@ -50,6 +50,7 @@ function handleOfFavorite(item: Item){
           {listaFavoritos.map((item, index) => (
             <Card key={index} item={item} onFavorite={handleFavorite} offFavorite={handleOfFavorite}/>
             ))}
+            <p>favorite</p>
         </ContainerFavorites>
     </>
   )
