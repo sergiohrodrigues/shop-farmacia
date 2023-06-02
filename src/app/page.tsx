@@ -33,15 +33,19 @@ export default function Home() {
         localStorage.setItem('listaFavoritos', JSON.stringify(novaLista));
     }
     
-    
     useEffect(() => {
-        const listaLocalStorage = localStorage.getItem('listaFavoritos')
-        const listaLocalStorageConvertida = JSON.parse(listaLocalStorage || '[]')
-        if(listaLocalStorageConvertida.length){
+        if(typeof window !== 'undefined'){
+            const listaLocalStorage = localStorage.getItem('listaFavoritos') || ""
+            const listaLocalStorageConvertida = JSON.parse(listaLocalStorage || '[]')
             setListaFavoritos(listaLocalStorageConvertida)
-        } else {
-            setListaFavoritos([])
         }
+        // const listaLocalStorage = localStorage.getItem('listaFavoritos')
+        // const listaLocalStorageConvertida = JSON.parse(listaLocalStorage || '[]')
+        // if(listaLocalStorageConvertida.length){
+        //     setListaFavoritos(listaLocalStorageConvertida)
+        // } else {
+        //     setListaFavoritos([])
+        // }
     }, [setListaFavoritos])
     
     function handleOfFavorite(item: Item){
