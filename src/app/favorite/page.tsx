@@ -2,8 +2,8 @@
 import Card from '@/components/Card'
 import Menu from '@/components/Menu'
 import { Item } from '@/interface/item'
-import { favoritos } from '@/states/favoritos'
-import React, { useEffect } from 'react'
+import { carrinho, favoritos } from '@/states/atom'
+import React, { useEffect, useState } from 'react'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import styled from 'styled-components'
 
@@ -13,12 +13,28 @@ const ContainerFavorites = styled.section`
   gap: 1rem;
   flex-wrap: wrap;
   margin: 2rem auto;
+  .titulo-sem-itens{
+    font-size: 2rem;
+    margin-top: 4rem;
+  }
 `
 
 export default function Favorite() {
-
   const listaFavoritos = useRecoilValue(favoritos)
   const setListaFavoritos = useSetRecoilState<Item[]>(favoritos)
+  const listaCarrinho = useRecoilValue(carrinho)
+  const setListaCarrinho = useSetRecoilState<Item[]>(carrinho)
+
+  useEffect(() => {
+    const listaLocalStorage = localStorage.getItem('listaFavoritos')
+    const listaLocalStorageConvertida = JSON.parse(listaLocalStorage || '[]')
+    if(listaLocalStorageConvertida.length){
+        setListaFavoritos(listaLocalStorageConvertida)
+    } else {
+        setListaFavoritos([])
+    }
+    
+  }, [setListaFavoritos])
 
   function handleFavorite(item: Item){
     const novaLista = [...listaFavoritos, item]
@@ -32,25 +48,28 @@ function handleOfFavorite(item: Item){
   localStorage.setItem('listaFavoritos', JSON.stringify(listaAtualizada));
 }
 
-  useEffect(() => {
-    const listaLocalStorage = localStorage.getItem('listaFavoritos')
-    const listaLocalStorageConvertida = JSON.parse(listaLocalStorage || '[]')
-    if(listaLocalStorageConvertida.length){
-        setListaFavoritos(listaLocalStorageConvertida)
-    } else {
-        setListaFavoritos([])
-    }
-    
-  }, [setListaFavoritos])
+function handleCarrinho(item: Item){
+  const novaListaDeCarrinho = [...listaCarrinho, item] 
+  setListaCarrinho(novaListaDeCarrinho)
+  localStorage.setItem('listaCarrinho', JSON.stringify(novaListaDeCarrinho))
+}
+
+function handleOfCarrinho(item: Item){
+  const listaDeCarrinhoAtualizada = listaCarrinho.filter(itemdDaLista => itemdDaLista.id !== item.id)
+  setListaCarrinho(listaDeCarrinhoAtualizada)
+  localStorage.setItem('listaCarrinho', JSON.stringify(listaDeCarrinhoAtualizada))
+}
+
 
   return (
     <>
         <Menu />
         <ContainerFavorites>
-          {listaFavoritos.map((item, index) => (
-            <Card key={index} item={item} onFavorite={handleFavorite} offFavorite={handleOfFavorite}/>
+          {listaFavoritos.length === 0 
+          ? <h2 className='titulo-sem-itens'>Não existe itens nessa lista</h2>
+          : listaFavoritos.map((item, index) => (
+              <Card key={index} item={item} onFavorite={handleFavorite} offFavorite={handleOfFavorite} onCarrinho={handleCarrinho} offCarrinho={handleOfCarrinho}/>
             ))}
-            <p>favorite</p>
         </ContainerFavorites>
     </>
   )

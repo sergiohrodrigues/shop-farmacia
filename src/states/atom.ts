@@ -5,3 +5,8 @@ export const favoritos = atom<Item[]>({
     key: 'favoritos',
     default: [], 
   });
+
+export const carrinho = atom<Item[]>({
+  key: 'carrinho',
+  default: []
+})

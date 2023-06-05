@@ -2,11 +2,12 @@ import { Item } from "@/interface/item"
 import Image from "next/image"
 import React, { useState, useEffect } from "react"
 import styled from "styled-components"
-import { BsCart2 } from 'react-icons/bs'
+import { BsCartPlus, BsCartX } from 'react-icons/bs'
 import Modal from "../Modal"
-import { useRecoilValue } from "recoil"
-import { favoritos } from "@/states/favoritos"
+import { useRecoilValue, useSetRecoilState } from "recoil"
+import { favoritos } from "@/states/atom"
 import { MdFavoriteBorder, MdFavorite } from 'react-icons/md'
+import { carrinho } from "@/states/atom"
 
 const Item = styled.div`
     width: 100%;
@@ -95,6 +96,11 @@ const Div2 = styled.div`
     .carrinho{
         position: static;
     }
+    .remover-carrinho{
+        background-color: red;
+        border: none;
+        color: #fff;
+    }
     button{
         width: 190px;
         padding: 0.5rem;
@@ -110,16 +116,20 @@ const Div2 = styled.div`
 interface Props {
     item: Item,
     onFavorite: (item: Item) => void,
-    offFavorite: (item: Item) => void
+    offFavorite: (item: Item) => void,
+    onCarrinho: (item: Item) => void,
+    offCarrinho: (item: Item) => void
 }
 
 
-export default function Card({item, onFavorite, offFavorite}: Props) {
+export default function Card({item, onFavorite, offFavorite, onCarrinho, offCarrinho}: Props) {
     const [imagemDois, setImagemDois] = useState(false)
     const [modalOpen, setModalOpen] = useState(false)
     const [iconFavorite, setIconFavorite] = useState(false)
+    const [btnCarrinho, setBtnCarrinho] = useState(false)
 
     const listaFavoritos = useRecoilValue(favoritos)
+    const listaCarrinho = useRecoilValue(carrinho)
 
     useEffect(() => {
         const itensNaListaDeFavoritos = listaFavoritos.find(itemDaLista => itemDaLista.id === item.id)
@@ -128,8 +138,15 @@ export default function Card({item, onFavorite, offFavorite}: Props) {
         } else {
             setIconFavorite(false)
         }
-    }, [listaFavoritos, item])
 
+        const itensNaListaDeCarrinho = listaCarrinho.find(itemDaLista => itemDaLista.id === item.id)
+        if(itensNaListaDeCarrinho){
+            setBtnCarrinho(true)
+        } else {
+            setBtnCarrinho(false)
+        }
+    }, [listaFavoritos, listaCarrinho, item])
+    
     function favoritarItem(){
         onFavorite(item)
         setIconFavorite(true)
@@ -144,6 +161,16 @@ export default function Card({item, onFavorite, offFavorite}: Props) {
         setModalOpen(true)
     }
 
+    function adicionarAoCarrinho(item: Item){
+        setBtnCarrinho(true)
+        onCarrinho(item)
+    }
+    
+    function removerDoCarrinho(item: Item){
+        setBtnCarrinho(false)
+        offCarrinho(item)
+    }
+
     return (
         <>
         <Item onMouseEnter={() => setImagemDois(true)} onMouseLeave={() => setImagemDois(false)}>
@@ -156,7 +183,10 @@ export default function Card({item, onFavorite, offFavorite}: Props) {
             <Div2>
                 <h2>{item.titulo}</h2>
                 <span>Valor: R${item.valor},00</span>
-                <button>Adicionbar ao carrinho <BsCart2 className="carrinho"/></button> 
+                {btnCarrinho 
+                    ? <button className="remover-carrinho" onClick={() => removerDoCarrinho(item)}>Remover do carrinho <BsCartX className="carrinho"/></button> 
+                    : <button onClick={() => adicionarAoCarrinho(item)}>Adicionar ao carrinho <BsCartPlus className="carrinho"/></button>
+                }
             </Div2>
         </Item>
         {modalOpen && <Modal modalOpen={modalOpen} setModalOpen={setModalOpen} item={item}/>}
