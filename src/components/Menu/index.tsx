@@ -1,4 +1,7 @@
+import { carrinho, favoritos } from "@/states/atom";
+import { Badge } from "@mui/material";
 import Link from "next/link";
+import { useRecoilValue } from "recoil";
 import styled from 'styled-components'
 
 const HeaderContainer = styled.header`
@@ -27,6 +30,9 @@ const HeaderContainer = styled.header`
 `
 
 export default function Menu() {
+    const listaDeFavoritos = useRecoilValue(favoritos)
+    const listaDeCarrinho = useRecoilValue(carrinho)
+
     return (
         <HeaderContainer>
             <Link href='/'>
@@ -36,13 +42,22 @@ export default function Menu() {
                 <Link href="/">
                     Inicio
                 </Link>
-                <Link href="/favorite
-                ">
+            <Badge
+              badgeContent={listaDeFavoritos.length}
+              color="primary"
+            >
+                <Link href="/favorite">
                     Lista de Desejos
                 </Link>
+            </Badge>
+            <Badge
+              badgeContent={listaDeCarrinho.length}
+              color="primary"
+            >
                 <Link href="/carrinho">
                     Carrinho
                 </Link>
+            </Badge>
             </ul>
         </HeaderContainer>
     )

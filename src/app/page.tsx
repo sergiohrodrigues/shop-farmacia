@@ -7,6 +7,7 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { Item } from "@/interface/item";
 import { carrinho, favoritos } from "@/states/atom";
 import { useState, useEffect } from 'react'
+import Rodape from "@/components/Rodape";
 
 const MainContainer = styled.main`
     position: relative;
@@ -68,8 +69,6 @@ export default function Home() {
         localStorage.setItem('listaCarrinho', JSON.stringify(listaDeCarrinhoAtualizada))
     }
 
-    console.log(listaCarrinho)
-
     return (
         <MainContainer>
             <Menu />
@@ -78,6 +77,7 @@ export default function Home() {
                     <Card key={index} item={item} onFavorite={handleFavorite} offFavorite={handleOfFavorite} onCarrinho={handleCarrinho} offCarrinho={handleOfCarrinho}/>
                     ))}
             </ProdutosContainer>
+            {/* <Rodape /> */}
         </MainContainer>
     )
 }

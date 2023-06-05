@@ -1,6 +1,7 @@
 'use client'
 import Card from '@/components/Card'
 import Menu from '@/components/Menu'
+import Rodape from '@/components/Rodape'
 import { Item } from '@/interface/item'
 import { carrinho, favoritos } from '@/states/atom'
 import React, { useEffect, useState } from 'react'
@@ -15,7 +16,7 @@ const ContainerFavorites = styled.section`
   margin: 2rem auto;
   .titulo-sem-itens{
     font-size: 2rem;
-    margin-top: 4rem;
+    text-align: center;
   }
 `
 
@@ -60,7 +61,6 @@ function handleOfCarrinho(item: Item){
   localStorage.setItem('listaCarrinho', JSON.stringify(listaDeCarrinhoAtualizada))
 }
 
-
   return (
     <>
         <Menu />
@@ -71,6 +71,7 @@ function handleOfCarrinho(item: Item){
               <Card key={index} item={item} onFavorite={handleFavorite} offFavorite={handleOfFavorite} onCarrinho={handleCarrinho} offCarrinho={handleOfCarrinho}/>
             ))}
         </ContainerFavorites>
+        {/* <Rodape /> */}
     </>
   )
 }

@@ -3,31 +3,38 @@ import Menu from "@/components/Menu";
 import { carrinho } from "@/states/atom";
 import Image from "next/image";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { RiDeleteBin6Fill } from 'react-icons/ri'
 import styled from "styled-components";
 import { Item } from "@/interface/item";
+import Rodape from "@/components/Rodape";
 
 const ContainerItensCarrinho = styled.section`
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    gap: 1rem;
+    gap: 2rem;
     width: 90%;
-    margin: 4rem auto 0 auto;
+    margin: 2rem auto 0 auto;
     .titulo-sem-itens{
-        font-size: 1.5rem;
+        font-size: 2rem;
         text-align: center;
     }
+    span{
+        margin-top: 2rem;
+        font-size: 1.2rem;
+        font-weight: 700;
+    }
     button{
-        margin-top: 5rem;
         padding: 1rem;
     }
     button:hover{
         cursor: pointer;
     }
-@media screen and (min-width: 768px){
+    h4{
+        text-align: center;
+    }
+    @media screen and (min-width: 768px){
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -37,8 +44,10 @@ const ContainerItensCarrinho = styled.section`
     .titulo-sem-itens{
         font-size: 2rem;
     }
+    span{
+        font-size: 1.5rem;
+    }
     button{
-        margin-top: 5rem;
         padding: 1rem;
     }
     button:hover{
@@ -48,7 +57,7 @@ const ContainerItensCarrinho = styled.section`
 `
 
 const ItemCarrinho = styled.div`
-width: 90%;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -56,11 +65,19 @@ width: 90%;
         width: 50px;
         height: 50px;
     }
+    h3{
+        width: 100px;
+        font-size: 1rem;
+    }
+    span{
+        margin: 0;
+        font-size: 1rem;
+    }
     svg{
         font-size: 1.5rem;
     }
     @media screen and (min-width: 768px){
-        width: 500px;
+        width: 700px;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -69,6 +86,10 @@ width: 90%;
             height: 80px;      
         }
         h3{
+            width: 260px;
+            font-size: 1.5rem;
+        }
+        span{
             font-size: 1.5rem;
         }
         svg{
@@ -81,38 +102,62 @@ width: 90%;
 `
 
 export default function Carrinho() {
-    const listaCarrinho = useRecoilValue(carrinho)
+    const listaCarrinho = useRecoilValue<Item[]>(carrinho)
     const setListaCarrinho = useSetRecoilState(carrinho)
+    const valoresNaLista = listaCarrinho.map(itemDaLista => itemDaLista.valor)
+    const [compraFinalizada, setCompraFinalizada] = useState(false)
+
+    let soma = 0
+
+    const somarValoresDaLista = () => {
+        for(var i = 0; i < valoresNaLista.length; i++){
+            soma += valoresNaLista[i]
+        }
+    }
+
+    somarValoresDaLista()
 
     useEffect(() => {
         const listaDeCarrinhoLocalStorage = localStorage.getItem('listaCarrinho')
         const listaDeCarrinhoLocalStorageConvertida = JSON.parse(listaDeCarrinhoLocalStorage || '[]')
         setListaCarrinho(listaDeCarrinhoLocalStorageConvertida)
     },[setListaCarrinho])
-
-
+    
     function removerDoCarrinho(item: Item){
         const listaAtualizada = listaCarrinho.filter(itemDaLista => itemDaLista.id !== item.id)
         setListaCarrinho(listaAtualizada)
         localStorage.setItem('listaCarrinho', JSON.stringify(listaAtualizada))
     }
 
+    console.log(typeof(listaCarrinho))
+
+    const finalizarCompra = () => {
+        setCompraFinalizada(true)
+        // const listaAtualizada = setListaCarrinho(JSON.stringify())
+        // localStorage.setItem('listaCarrinho', JSON.stringify(listaAtualizada))
+    }
+    
     return (
         <>
             <Menu />
-            <ContainerItensCarrinho>
+            {compraFinalizada 
+            ? <h4 style={{textAlign:'center', marginTop:'2rem'}}>Compra finalizada com sucesso! verifique seu e-mail para mais detalhes.</h4>
+            : <ContainerItensCarrinho>
             {listaCarrinho.length === 0
                 ? <h2 className="titulo-sem-itens">Nao existem itens no carrinho</h2>
                 : listaCarrinho.map((item, index) => (
                     <ItemCarrinho key={index}>
                         <Image src={`/imagens/imagem${item.id}.png`} width={80} height={80} alt={item.titulo} />
                         <h3>{item.titulo}</h3>
+                        <span>R${item.valor},00</span>
                         <RiDeleteBin6Fill onClick={() => removerDoCarrinho(item)}/>
                     </ItemCarrinho>
                 ))
             }
-            {listaCarrinho.length !== 0 ? <button>Finalizar compra</button> : null}
-            </ContainerItensCarrinho>
+            {listaCarrinho.length !== 0 ? <span>Valor total = R${soma},00 reais.</span> : null}
+            {listaCarrinho.length !== 0 ? <button onClick={finalizarCompra}>Finalizar compra</button> : null}
+            </ContainerItensCarrinho>}
+            {/* <Rodape /> */}
         </>
     )
 }
