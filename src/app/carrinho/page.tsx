@@ -8,6 +8,7 @@ import { RiDeleteBin6Fill } from 'react-icons/ri'
 import styled from "styled-components";
 import { Item } from "@/interface/item";
 import Rodape from "@/components/Rodape";
+import { useRemoverCarrinho } from "@/states/hooks/useRemoverCarrinho";
 
 const ContainerItensCarrinho = styled.section`
     display: flex;
@@ -107,14 +108,14 @@ export default function Carrinho() {
     const valoresNaLista = listaCarrinho.map(itemDaLista => itemDaLista.valor)
     const [compraFinalizada, setCompraFinalizada] = useState(false)
 
+    const removerCarrinho = useRemoverCarrinho()
+    
     let soma = 0
-
     const somarValoresDaLista = () => {
         for(var i = 0; i < valoresNaLista.length; i++){
             soma += valoresNaLista[i]
         }
     }
-
     somarValoresDaLista()
 
     useEffect(() => {
@@ -124,9 +125,7 @@ export default function Carrinho() {
     },[setListaCarrinho])
     
     function removerDoCarrinho(item: Item){
-        const listaAtualizada = listaCarrinho.filter(itemDaLista => itemDaLista.id !== item.id)
-        setListaCarrinho(listaAtualizada)
-        localStorage.setItem('listaCarrinho', JSON.stringify(listaAtualizada))
+        removerCarrinho(item)
     }
 
     const finalizarCompra = () => {
@@ -139,22 +138,23 @@ export default function Carrinho() {
         <>
             <Menu />
             {compraFinalizada 
-            ? <h4 style={{textAlign:'center', marginTop:'2rem', fontSize:'2rem'}}>Compra finalizada com sucesso! <br/> verifique seu e-mail para mais detalhes.</h4>
-            : <ContainerItensCarrinho>
-            {listaCarrinho.length === 0
-                ? <h2 className="titulo-sem-itens">Nao existem itens no carrinho</h2>
-                : listaCarrinho.map((item, index) => (
-                    <ItemCarrinho key={index}>
-                        <Image src={`/imagens/imagem${item.id}.png`} width={80} height={80} alt={item.titulo} />
-                        <h3>{item.titulo}</h3>
-                        <span>R${item.valor},00</span>
-                        <RiDeleteBin6Fill onClick={() => removerDoCarrinho(item)}/>
-                    </ItemCarrinho>
-                ))
+                ? <h4 style={{textAlign:'center', marginTop:'2rem', fontSize:'2rem'}}>Compra finalizada com sucesso! <br/> verifique seu e-mail para mais detalhes.</h4>
+                : <ContainerItensCarrinho>
+                    {listaCarrinho.length === 0
+                        ? <h2 className="titulo-sem-itens">Nao existem itens no carrinho</h2>
+                        : listaCarrinho.map((item, index) => (
+                            <ItemCarrinho key={index}>
+                                <Image src={`/imagens/imagem${item.id}.png`} width={80} height={80} alt={item.titulo} />
+                                <h3>{item.titulo}</h3>
+                                <span>R${item.valor},00</span>
+                                <RiDeleteBin6Fill onClick={() => removerDoCarrinho(item)}/>
+                            </ItemCarrinho>
+                        ))
+                    }
+                    {listaCarrinho.length !== 0 ? <span>Valor total = R${soma},00 reais.</span> : null}
+                    {listaCarrinho.length !== 0 ? <button onClick={finalizarCompra}>Finalizar compra</button> : null}
+                </ContainerItensCarrinho>
             }
-            {listaCarrinho.length !== 0 ? <span>Valor total = R${soma},00 reais.</span> : null}
-            {listaCarrinho.length !== 0 ? <button onClick={finalizarCompra}>Finalizar compra</button> : null}
-            </ContainerItensCarrinho>}
             {/* <Rodape /> */}
         </>
     )
