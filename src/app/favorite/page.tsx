@@ -66,7 +66,7 @@ function handleOfCarrinho(item: Item){
         <Menu />
         <ContainerFavorites>
           {listaFavoritos.length === 0 
-          ? <h2 className='titulo-sem-itens'>Não existe itens nessa lista</h2>
+          ? <h2 className='titulo-sem-itens'>Sem itens na lista</h2>
           : listaFavoritos.map((item, index) => (
               <Card key={index} item={item} onFavorite={handleFavorite} offFavorite={handleOfFavorite} onCarrinho={handleCarrinho} offCarrinho={handleOfCarrinho}/>
             ))}

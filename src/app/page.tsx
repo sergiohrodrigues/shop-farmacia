@@ -63,7 +63,7 @@ export default function Home() {
     function handleCarrinho(item: Item){
         adicionarCarrinho(item)
     }
-    
+
     function handleOfCarrinho(item: Item){
         removerCarrinho(item)
     }

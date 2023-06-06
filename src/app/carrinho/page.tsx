@@ -41,7 +41,7 @@ const ContainerItensCarrinho = styled.section`
     justify-content: center;
     align-items: center;
     gap: 1rem;
-    margin-top: 4rem;
+    margin-top: 2rem;
     .titulo-sem-itens{
         font-size: 2rem;
     }
@@ -138,10 +138,10 @@ export default function Carrinho() {
         <>
             <Menu />
             {compraFinalizada 
-                ? <h4 style={{textAlign:'center', marginTop:'2rem', fontSize:'2rem'}}>Compra finalizada com sucesso! <br/> verifique seu e-mail para mais detalhes.</h4>
+                ? <h4 style={{textAlign:'center', fontSize:'1.5rem'}}>Compra finalizada com sucesso! <br/> verifique seu e-mail para mais detalhes.</h4>
                 : <ContainerItensCarrinho>
                     {listaCarrinho.length === 0
-                        ? <h2 className="titulo-sem-itens">Nao existem itens no carrinho</h2>
+                        ? <h2 className="titulo-sem-itens">Sem itens no carrinho</h2>
                         : listaCarrinho.map((item, index) => (
                             <ItemCarrinho key={index}>
                                 <Image src={`/imagens/imagem${item.id}.png`} width={80} height={80} alt={item.titulo} />
