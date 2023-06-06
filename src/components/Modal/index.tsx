@@ -25,7 +25,6 @@ const ModalBackDrop = styled.section<PropsStyledComponents>`
 }
 `
 
-/* display: ${props => props.display}; */
 const ModalContainer = styled.div`
     width: 90%;
     margin: -2rem auto 0 auto;

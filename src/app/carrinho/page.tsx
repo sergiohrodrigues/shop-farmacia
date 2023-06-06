@@ -129,19 +129,17 @@ export default function Carrinho() {
         localStorage.setItem('listaCarrinho', JSON.stringify(listaAtualizada))
     }
 
-    console.log(typeof(listaCarrinho))
-
     const finalizarCompra = () => {
         setCompraFinalizada(true)
-        // const listaAtualizada = setListaCarrinho(JSON.stringify())
-        // localStorage.setItem('listaCarrinho', JSON.stringify(listaAtualizada))
+        setListaCarrinho([])
+        localStorage.setItem('listaCarrinho', JSON.stringify([]))
     }
-    
+
     return (
         <>
             <Menu />
             {compraFinalizada 
-            ? <h4 style={{textAlign:'center', marginTop:'2rem'}}>Compra finalizada com sucesso! verifique seu e-mail para mais detalhes.</h4>
+            ? <h4 style={{textAlign:'center', marginTop:'2rem', fontSize:'2rem'}}>Compra finalizada com sucesso! <br/> verifique seu e-mail para mais detalhes.</h4>
             : <ContainerItensCarrinho>
             {listaCarrinho.length === 0
                 ? <h2 className="titulo-sem-itens">Nao existem itens no carrinho</h2>
